@@ -1,0 +1,160 @@
+<!-- 
+    思路：
+    首先进行布局
+    头部的图片进行引入  图片下进行写入input框  和一个点击的按钮
+    input框下放入一个存放添加数据的ul标签  添加的数据放入ul里面
+    底部就是放统计有总共多少的数据的条数  还有一个按钮  进行删除全部的数据
+
+    步骤
+    给input框绑定id属性通过document.querySelector来获取到这个input框的id 进行对比
+    然后对这个input框绑定onkeydown时间,判断是不是回车再次进行判断输入框的文字长度是不是有
+    要是没有就返回不可以为空 要是有的话放入li标签里面
+    把li标签再放入ul里面 这就是添加
+    删除的话  获取到添加的dom节点  进行查找进行删除
+    删除的话重新渲染  
+    数据统计的话  获取到添加数据的总长度  总的长度等于一个建立为0的函数
+    清空的话 直接把li标签的数据进行清空 让ul标签进行清空
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="q1">
+        <img src="./img/1.png" alt="" class="q2">
+        <img src="./img/2.png" alt="" class="q3">
+        <h3>~ Today l need to ~</h3><br>
+        <input type="text" placeholder="Add new todo..." class="q4" id="input">
+        <button id="btn">Submit</button>
+        <ul id="to">
+            
+        </ul>
+        <div id="xia">
+            <span id="count">0</span>
+            <button id="qing">清空</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var input = document.querySelector('#input')
+    var btn = document.querySelector('#btn')
+    var to = document.querySelector('#to')
+    var count = document.querySelector('#count')
+    var qing = document.querySelector('#qing')
+    var del = document.querySelectorAll('.del')
+    var counts = 0
+    // 回车添加
+    input.onkeydown = function(e) {
+        if(e.keyCode === 13) {
+            if(input.value == '') {
+                alert('输入框不能为空')
+                return false
+            }else {
+                var li = document.createElement('li')
+                li.innerHTML = `
+                <input type="checkbox" class='xuanran' />
+                <span>${input.value}</span>
+                <span class='del'>X</span>
+                `
+                to.appendChild(li)
+                input.value = ''
+                counts = to.children.length
+                count.innerHTML = counts
+            }
+        }
+    }
+    // 点击按钮添加
+    btn.onclick = function() {
+        if(input.value == '') {
+            alert('输入框不能为空')
+            return false
+        }else {
+            var li = document.createElement('li')
+            li.innerHTML = `
+            <input type="checkbox" class='xuanran' />
+            <span>${input.value}</span>
+            <span class='del'>X</span>
+            `
+            to.appendChild(li)
+            input.value = ''
+            counts = to.children.length
+            count.innerHTML = counts
+        }
+    }
+    // 点击删除
+    to.addEventListener('click',function(e) {
+        if(e.target.className == 'del') {
+            e.target.parentNode.parentNode.removeChild(e.target.parentNode)
+            counts = to.children.length
+            count.innerHTML = counts
+        }
+    })
+    // 点击清空进行清空
+    qing.onclick = function() {
+        to.innerHTML = ''
+        counts = to.children.length
+            count.innerHTML = counts
+    }
+    to.onclick= function(e){
+        // if(e.target.className=='xuanran'?e.target.parentNode.style.textDecoration="line-through":e.target.parentNode.style.textDecoration="line-through")
+        // {
+        //     // e.target.parentNode.className='noxuanran'
+        //     // e.target.parentNode.style.textDecoration='line-through'
+        //     // e.target.parentNode.style.backgroundColor='pink'
+        // }
+        // else{
+        //     e.target.parentNode.className='xuanran'
+        //     e.target.parentNode.style.textDecoration=''
+        //     e.target.parentNode.style.backgroundColor=''
+        // }
+        if(e.target.className == "xuanran") {
+            e.target.parentNode.style.textDecoration = "line-through"
+            e.target.parentNode.style.backgroundColor = 'pink'
+        }
+    }
+ 
+</script>
+<style>
+    .del{
+        color: red;
+    }
+    html{
+        background-color: rgb(250, 157, 222);
+    }
+    .q1{
+        width: 400px;
+        height: 500px;
+        background-color: #f2f2f2;
+        margin: auto;
+        margin-top: 150px;
+        border-radius: 20px;
+    }
+    .q2{
+        width: 120px;
+        height: 120px;
+        margin-top: 30px;
+        margin-left: 80px;
+    }
+    h3{
+        text-align: center;
+    }
+    .q4{
+        border: none;
+        outline: none;
+        background-color: #f2f2f2;
+        margin-left: 80px;
+        border-bottom: 3px dashed pink;
+    }
+    ul{
+        list-style: none;
+    }
+    li{
+        display: flex;
+        justify-content: space-between
+    }
+</style>
+
