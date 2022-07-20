@@ -1,0 +1,143 @@
+-------------枚举
+1.数字枚举  
+把数字枚举看成块级就成，不可以看成对象形式  因为对象是：   数字枚举是=号赋值
+可以指定索引值  指定第一个索引值  后面的会进行递增
+每次手动添加索引的时候，下面数据如果不是手动添加的索引，将会以递增的方式，把索引展示处理啊
+
+2.字符串枚举
+在定义的时候都要是字符串
+如果一个值使用了计算值和常量，那么就要给每一个都进行赋值
+
+3.字符串枚举
+在定义的时候都是字符串
+不能使用计算值和常量，枚举成员必须具有初始化表达式
+
+4.反向映射
+定义一个枚举值的时候，可以用Enum['key']或者Enum.key的方法获取到value值
+注意只能是数字枚举可以使用，字符枚举不能使用
+
+5.枚举成员类型
+可以吧符合条件的成员作为枚举值来进行使用
+
+6.联合成员类型
+当枚举值符合条件的时候，这个成员可以看做是包含所有成员的联合类型
+
+7.异构枚举
+枚举值得类型中既有字符串又有数组
+
+8.运行时的枚举
+枚举在编译后的值实际是一个对象
+
+-----------------------使用接口定义任何结构  
+总结：
+1.interface
+2.可选属性 ？
+3.[prop:string]:any
+4.多余的属性的检查  as <>
+
+1.基本用法
+使用interface来定义接口
+注意在定义接口的时候，你不要把他理解为是在定义一个对象，而是理解为[]
+
+举例
+第一种  我们参数都不传     应有一个参数  但是获得0个
+第二种  我们传递错误参数  对象文字可以只指定已知属性，并且‘age’不在类型“{ firstName: string; lastName: string; }”中
+第三种  我们传递的参数个数不一样  类型“{ firstName: string; lastName: string; }”的参数不能赋给类型‘persion’的参数 类型“{ firstName: string; lastName: string; }”缺少类型“Persion”中的以下属性: age, sex
+
+可选属性  ？
+举例： 
+    interface Persion {
+    firstName: string, 
+    lastName: string,
+    age: number,
+    sex: boolean,
+    colors?: string,
+    [prop: string]: any
+ }
+
+ let result = getFullName({firstName: '三', lastName: '张', age: 20, sex:false, height: 123})
+
+绕开多余属性的检查，类型断言
+1.类型断言  as  <>
+2.[props:string]:any
+
+举例:
+interface Vegetables{
+   color?: string,
+   type: string
+}
+
+const getVegetables = ({color, type}: Vegetables) : string => {
+   return  `A ${color? color + "" : " "}${type}`
+}
+
+getVegetables({
+   type: "tomato",
+   size: 12,
+   price: 1.2
+ } as Vegetables);
+
+
+ interface Vegetables{
+   color?: string,
+   type: string,
+   [props: string]: any
+}
+
+3.利用类型兼容性
+举例：
+interface Vegetables {
+   type: string;
+ }
+ const getVegetables = ({ type }: Vegetables) => {
+   return `A ${type}`;
+ };
+ 
+ const option = { type: "tomato", size: 12 };
+ getVegetables(option);
+
+只读属性  readonly
+举例：
+ interface Role {
+   readonly 0: string;
+   readonly 1: string;
+ }
+
+ const role: Role = {
+   0: 'super_admin',
+   1: 'admin'
+ }
+
+ role[1] = '我是快乐的';// 无法分配到 "1" ，因为它是只读属性
+
+ /**
+  * const 和 readonly  对比
+  */
+
+ const NAME: string = "帅字辈";
+// NAME = "抬头" // 无法分配到 "NAME" ，因为它是常数。
+
+--
+const obj = {
+   name: '帅字辈'
+}
+obj.name = "包胜利"
+
+interface Info {
+   readonly name: string
+}
+
+const info: Info = {
+   name: '帅字辈'
+}
+info['name'] = "包胜利" // 无法分配到 "name" ，因为它是只读属性
+
+类型别名
+举例：
+
+interface AddFunc {
+   (num1: number, num2: number) : number
+}
+const add: AddFunc = (n1, n2) => n1 + n2;
+const join: AddFunc = (n1, n2) => `${n1} ${n2}`; // 不能将类型'string'分配给类型'number'
+add("a", 2); // 类型'string'的参数不能赋给类型'number'的参数
