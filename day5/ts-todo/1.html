@@ -1,0 +1,45 @@
+<!-- 
+    思路：
+    首先进行布局
+    头部的图片进行引入  图片下进行写入input框  和一个点击的按钮
+    input框下放入一个存放添加数据的ul标签  添加的数据放入ul里面
+    底部就是放统计有总共多少的数据的条数  还有一个按钮  进行删除全部的数据
+
+    步骤
+    给input框绑定id属性通过document.querySelector来获取到这个input框的id 进行对比
+    然后对这个input框绑定onkeydown时间,判断是不是回车再次进行判断输入框的文字长度是不是有
+    要是没有就返回不可以为空 要是有的话放入li标签里面
+    把li标签再放入ul里面 这就是添加
+    删除的话  获取到添加的dom节点  进行查找进行删除
+    删除的话重新渲染  
+    数据统计的话  获取到添加数据的总长度  总的长度等于一个建立为0的函数
+    清空的话 直接把li标签的数据进行清空 让ul标签进行清空
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <link rel="stylesheet" href="./1.css">
+ </head>
+ <body>
+     <div class="q1">
+         <img src="./img/1.png" alt="" class="q2">
+         <img src="./img/2.png" alt="" class="q3">
+         <h3>~ Today l need to ~</h3><br>
+         <input type="text" placeholder="Add new todo..." onkeydown="add(event)" class="q4" id="input">
+         <button id="btn" onclick="add()">Submit</button>
+         <ul id="to">
+         </ul>
+         <div id="xia">
+             <span>总条数:<span id="count">0</span></span> 
+             <span>选中条数:<span id="count1">0</span></span>
+             <span id="weixuan">未选中</span>
+             <span id="yixuan">已选中</span>
+             <button id="qing">清空</button>
+         </div>
+     </div>
+ </body>
+ </html>
+<script src="./1.js"></script>
