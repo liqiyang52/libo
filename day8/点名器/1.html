@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="yi">随机一个</button>
+    <button class="er">随机两个</button>
+</body>
+<script>
+    var arr = ['李二狗','张三','李四','王五','红浪漫','狗蛋','铁柱']
+    var arr1 = arr[Math.floor(Math.random()*arr.length)]
+    var arr2 = arr[Math.floor(Math.random()*arr.length)]
+    var yi = document.querySelector('.yi')
+    var body = document.querySelector('body')
+    var er = document.querySelector('.er')
+    yi.onclick = function(){
+        console.log(arr1)
+        document.write(arr1)
+    }
+    er.onclick = function(){
+        console.log(arr1)
+        document.write(arr1)
+        console.log(arr2)
+        document.write(arr2)
+    }
+</script>
+</html>
